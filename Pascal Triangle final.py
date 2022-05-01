@@ -1,41 +1,30 @@
+# Pascal's Triangle
 
-rows = int(input("Enter the number of rows: "))
-
-space_li = []
-space = ""
-space_li.append(space)
-
-for z in range(1, rows):
-    space += " "
-    space_li.append(space)
+def pascal_rows(n):
+    li = [[1]]
+    for i in range(n-1):
+        li_now = []
+        li_prev = li[i]
+        for j in range(len(li_prev)-1):
+            li_now.append(li_prev[j] + li_prev[j+1])
+            
+        li_now.insert(0, 1)
+        li_now.insert(len(li_now), 1)
+        
+        li.append(li_now)
     
-
-def print_list(li):
-    pos = rows - len(li)
-    spacing = space_li[pos]
-    string = ""
-    for item in li:
-        string += str(item) + " "
-    print(spacing + string)
-
-
-print_list([1])
-
-li = [1, 1]
-print_list(li)
-
-for i in range(rows-2):
+    li_str = []
+    for row in li:
+        s_0 = ""
+        for num in row:
+            s_0 += str(num) + " "
+        s = s_0[:len(s_0)-1]
+        li_str.append(s)
     
-    length = len(li)    
-    li_2 = []
-    for m in range(length):
-        if m == 0 or m == length-1:
-            li_2.append(1)    
-        if m < length - 1:
-            li_2.append(li[m] + li[m+1])
-           
-    li = li_2
-    print_list(li)
+    max_length = len(li_str[len(li_str)-1])
+    for string in li_str:
+        space_count = (max_length-len(string))//2
+        space = " "*space_count
+        print(space + string)
 
-
-
+pascal_rows(15)
